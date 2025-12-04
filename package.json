@@ -1,0 +1,27 @@
+{
+  "name": "tasklist",
+  "version": "1.0.0",
+  "description": "This is a tasklist API that works by running full CRUD functions through HTTP methods and manage a list of tasks saved into a JSON  file",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/barbosacaio/tasklist.git"
+  },
+  "keywords": [
+    "node",
+    "tasklist",
+    "express"
+  ],
+  "author": "Caio Barbosa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/barbosacaio/tasklist/issues"
+  },
+  "homepage": "https://github.com/barbosacaio/tasklist#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
