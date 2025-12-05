@@ -20,4 +20,8 @@ This is a tasklist API that works by running full **CRUD** functions through **H
 
 ## ❔ How to use
 1. Install **Express**: you can use ``npm install express`` or choose ``npm install express --no-save`` to make it temporary instead of a required dependency
-2. Run ``node app.js`` to execute the script
+2. Run ``node src/app.js`` to execute the script
+
+## 🎲 Functions
+- ``/``: Default route to check if API is running as expected
+- ``/add``: ``POST`` route to add a new task into the JSON file
