@@ -16,6 +16,40 @@ app.get('/', (req, res) => {
     }
 })
 
+// GET route to fetch all tasks
+app.get('/tasks', (req, res) => {
+    try {
+        // Read existing tasks from tasks.json file
+        fs.readFile('tasks.json', 'utf8', (err, data) => {
+            if (err) {
+                console.error('Error reading tasks.json:', err)
+                return res.status(500).json({
+                    message: 'Error reading tasks.json file',
+                    error: err.message
+                })
+            }
+
+            try {
+                const tasks = JSON.parse(data)
+                // Returns the list of tasks as JSON response
+                res.status(200).json(tasks)
+            } catch (parseError) {
+                console.error('Error parsing tasks.json:', parseError)
+                res.status(500).json({
+                    message: 'Error parsing tasks.json file',
+                    error: parseError.message
+                })
+            }
+        })
+    } catch (error) {
+        console.error('Error in GET /tasks:', error)
+        res.status(500).json({
+            message: 'Internal Server Error',
+            error: error.message
+        })
+    }
+})
+
 // POST route to add a new task
 app.post('/add', (req, res) => {
     try {
