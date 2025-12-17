@@ -25,4 +25,6 @@ This is a tasklist API that works by running full **CRUD** functions through **H
 ## 🎲 Functions
 - ``/``: Default route to check if API is running as expected
 - ``/add``: ``POST`` route to add a new task into the JSON file
-- ``/delete/:id``: ``DELETE`` route to remove a specific task based on its unique ID
+- ``/tasks``: ``GET`` route to list all existing tasks in JSON format
+- ``/update``: ``PUT`` route to update a task based on its unique ID
+- ``/delete``: ``DELETE`` route to remove a specific task based on its unique ID

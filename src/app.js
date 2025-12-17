@@ -115,6 +115,71 @@ app.post('/add', (req, res) => {
     }
 })
 
+// PUT route to edit a task by id
+app.put('/update', (req, res) => {
+    const taskId = parseInt(req.query.id)
+    const { title, description, completed } = req.query
+
+    // Checks if the provided id is a valid number
+    if (isNaN(taskId)) {
+        return res.status(400).json({ error: 'Invalid task ID' })
+    }
+
+    try {
+        fs.readFile('tasks.json', 'utf8', (err, data) => {
+            if (err) {
+                console.error('Error reading tasks.json:', err)
+                return res.status(500).json({
+                    message: 'Error reading tasks.json file',
+                    error: err.message
+                })
+            }
+
+            try {
+                let tasks = JSON.parse(data);
+                const taskIndex = tasks.findIndex(task => task.id === taskId) // Finds the index of the task to be updated
+
+                if (taskIndex === -1) {
+                    return res.status(404).json({ error: 'Task not found' })
+                }
+
+                // Updates the task properties if provided in the request
+                if (title) tasks[taskIndex].title = title
+                if (description) tasks[taskIndex].description = description
+                if (completed !== undefined) tasks[taskIndex].completed = (completed === 'true')
+
+                fs.writeFile('tasks.json', JSON.stringify(tasks, null, 2), (err) => {
+                    if (err) {
+                        console.error('Error writing tasks.json:', err)
+                        return res.status(500).json({
+                            message: 'Error writing tasks.json file',
+                            error: err.message
+                        })
+                    }
+
+                    // Returns the updated task as response
+                    res.status(200).json({
+                        message: 'Task updated',
+                        task: tasks[taskIndex]
+                    })
+                })
+            } catch (parseError) {
+                console.error('Error parsing tasks.json:', parseError)
+                res.status(500).json({
+                    message: 'Error parsing tasks.json file',
+                    error: parseError.message
+                })
+            }
+        })
+    } catch (error) {
+        console.error('Error in PUT /update', error)
+        res.status(500).json({
+            message: 'Internal Server Error',
+            error: error.message
+        })
+    }
+})
+
 // DELETE route to remove a task by id
 app.delete('/delete', (req, res) => {
     const taskId = parseInt(req.query.id)
